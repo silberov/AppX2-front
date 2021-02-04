@@ -1,15 +1,31 @@
 import { useState } from "react";
-import useCrud from "../hooks/useCrud";
+import { Link, Redirect } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("blabla@gmail.com");
   const [password, setPassword] = useState("123321");
-  const { onAdd } = useCrud();
+  //   const [redi];
+  const [userId, setUserId] = useState(null);
+
+  const heandleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password }),
+    };
+    fetch("http://localhost:3000/api/auth/login", requestOptions)
+      .then((response) => response.json())
+      .then((data) => setUserId(data));
+  };
+
   return (
     <>
+      {userId && <Redirect to="/appc" />}
       <h1>App2X</h1>
       <p>login</p>
-      <form>
+      <form onSubmit={(e) => heandleSubmit(e)}>
         <label>
           Email:
           <input
@@ -23,14 +39,16 @@ function Login() {
         <label>
           Password:
           <input
-            type="text"
+            type="password"
             placeholder={`${password}`}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
         <br />
-        <input type="submit" value="login" />
+        <Link to="/register">Register</Link>
+        <br />
+        <input type="submit" value="submit" />
       </form>
     </>
   );
