@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function ApplicationCard({ data, onDelete }) {
-  console.log("data card", data);
+  // console.log("data card", data);
 
   return (
     <div
@@ -46,7 +46,7 @@ function ApplicationCard({ data, onDelete }) {
         )}
       </div>
       <div>
-        <textarea>{data.notes}</textarea>
+        <textarea defaultValue={data.notes} />
       </div>
       <div>
         <button>edit</button>

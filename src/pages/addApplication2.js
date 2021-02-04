@@ -7,11 +7,10 @@ function CompanyZone({ newCompany }) {
   return <>{newCompany ? <AddNewCompany /> : <SelectCompany />}</>;
 }
 
-function AddApplication1({ getApp }) {
-  console.log(getApp);
-  const [companyId, setCompanyId] = useState("");
-  const [position, setPosition] = useState("");
-  const [posting, setPosting] = useState("");
+function AddApplication2({ application }) {
+  const [notes, setNotes] = useState("");
+  const [cv, setCV] = useState("");
+  const [letter, setLetter] = useState("");
   const [statusId, setStatusId] = useState(0);
   const [statusList, setStatusList] = useState([]);
   const [redirect, setRedirect] = useState(false);
@@ -26,22 +25,21 @@ function AddApplication1({ getApp }) {
   const heandleSubmit = (e) => {
     e.preventDefault();
     const requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        companyId: companyId,
-        position: position,
-        linkToPosting: posting,
         statusId: statusId,
-        linkToLetter: "",
-        linkToCV: "",
-        notes: "",
+        linkToLetter: letter,
+        linkToCV: cv,
+        notes: notes,
       }),
     };
-    fetch(`http://localhost:3000/api/application/`, requestOptions)
+    fetch(
+      `http://localhost:3000/api/application/${application.id}`,
+      requestOptions
+    )
       .then((response) => response.json())
-      .then((data) => getApp(data))
-      .then(setRedirect(true));
+      .then((data) => console.log("data", data));
   };
 
   useEffect(() => {
@@ -50,35 +48,15 @@ function AddApplication1({ getApp }) {
   // useEffect(() => {
   //   setSelected(copmanyList.find((item) => item.id === Number(selectedId)));
   // }, [selectedId]);
-  console.log("companyId", companyId);
+  console.log(application);
   return (
     <>
-      {redirect && <Redirect to="/add/2" />}
+      {redirect && <Redirect to="/all" />}
       <p>
-        <strong>Company</strong> - Application
+        Company - <strong>Application</strong>
       </p>
       <form onSubmit={(e) => heandleSubmit(e)}>
         {/* <button onClick={() => heandleTogel(!newCompany)}>Add new</button> */}
-        <SelectCompany onCompany={setCompanyId} />
-
-        <label>
-          Position:
-          <input
-            type="text"
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          Link:
-          <input
-            type="text"
-            value={posting}
-            onChange={(e) => setPosting(e.target.value)}
-          />
-        </label>
-        <br />
         <label>
           status:
           <select
@@ -91,11 +69,37 @@ function AddApplication1({ getApp }) {
           </select>
         </label>
 
+        <label>
+          CV:
+          <input
+            type="text"
+            value={cv}
+            onChange={(e) => setCV(e.target.value)}
+          />
+        </label>
         <br />
-        <input type="submit" value="Next" />
+        <label>
+          Link:
+          <input
+            type="text"
+            value={letter}
+            onChange={(e) => setLetter(e.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          notes:
+          <input
+            type="text"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          />
+        </label>
+        <br />
+        <input type="submit" value="Submit" onClick={() => setRedirect(true)} />
       </form>
     </>
   );
 }
 
-export default AddApplication1;
+export default AddApplication2;

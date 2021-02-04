@@ -1,33 +1,15 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import ApplicationCard from "./components/applicationCard";
 import { AllApplications } from "./pages/allApplications";
-const applicationData = {
-  id: 1,
-  userId: 1,
-  companyId: 1,
-  statusId: 3,
-  position: "aaa",
-  linkToPosting: "aa",
-  linkToCV: "aa",
-  linkToLetter: "aaa",
-  notes: "srdgf21231drx",
-  CreatedAt: "2021-02-03T22:00:32.507Z",
-  UpdatedAt: "2021-02-04T11:41:11.205Z",
-  Status: {
-    name: "not submited",
-  },
-  company: {
-    name: "wix",
-    homepage: "www.wix-home.com",
-    logo: null,
-  },
-};
+import AddApplication1 from "./pages/addApplication";
+import AddApplication2 from "./pages/addApplication2";
+import { useState } from "react";
 
 function App() {
+  const [application, setApplication] = useState(null);
+  console.log(application);
   return (
     <Router>
       <div className="App">
@@ -38,8 +20,14 @@ function App() {
           <Route path="/register">
             <Register />
           </Route>
-          <Route path="/appc">
+          <Route path="/all">
             <AllApplications />
+          </Route>
+          <Route path="/add/1">
+            <AddApplication1 getApp={(app) => setApplication(app)} />
+          </Route>
+          <Route path="/add/2">
+            <AddApplication2 application={application} />
           </Route>
         </Switch>
       </div>

@@ -22,7 +22,7 @@ function Login() {
 
   return (
     <>
-      {userId && <Redirect to="/appc" />}
+      {userId && <Redirect to="/all" />}
       <h1>App2X</h1>
       <p>login</p>
       <form onSubmit={(e) => heandleSubmit(e)}>
