@@ -96,7 +96,7 @@ function AddApplication2({ application }) {
           />
         </label>
         <br />
-        <input type="submit" value="Submit" onClick={() => setRedirect(true)} />
+        <input type="submit" value="Submit" />
       </form>
     </>
   );
